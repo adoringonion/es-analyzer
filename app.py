@@ -19,4 +19,4 @@ def post():
 
 if __name__ == '__main__':
     # http://localhost:5000/ でアクセスできるよう起動
-    app.run(host='localhost', port=5000)
+    app.run()
