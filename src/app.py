@@ -2,7 +2,7 @@ from gensim.models.doc2vec import Doc2Vec
 from flask import Flask, request
 app = Flask(__name__)
 
-model = Doc2Vec.load('models/doc2_1.model')
+model = Doc2Vec.load('../models/doc2_1.model')
 
 
 @app.route('/')
