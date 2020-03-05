@@ -1,0 +1,4 @@
+Flask
+gensim
+gunicorn
+python-dotenv
