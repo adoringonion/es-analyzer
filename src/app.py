@@ -1,22 +1,54 @@
 from gensim.models.doc2vec import Doc2Vec
 from flask import Flask, request
+import requests
+import xml.etree.ElementTree as ET
+import json
+import settings
+
 app = Flask(__name__)
 
-model = Doc2Vec.load('../models/doc2_1.model')
+model = Doc2Vec.load('models/doc2_1.model')
+yahoo_url = 'https://jlp.yahooapis.jp/MAService/V1/parse'
+client_id = settings.ID
 
 
-@app.route('/')
-def index():
-    return 'hello world'
-
-
-@app.route("/post", methods=['POST'])
+@app.route("/", methods=['POST'])
 def post():
-    hoge = request.form['hoge']
+    sentence = request.form['sentence']
+    list = []
 
-    return model.docvecs.most_similar(hoge, topn=10)[0][0]
+    data = {
+        'appid': client_id,
+        'results': 'ma',
+        'sentence': sentence
+    }
+
+    res = requests.post(yahoo_url, data=data)
+
+    root = ET.fromstring(res.text)
+
+    for e in root.getiterator('{urn:yahoo:jp:jlp}surface'):
+        list.append(e.text)
+
+    conseq = model.docvecs.most_similar([model.infer_vector(list)])
+
+    dict_data = {
+        '1位': conseq[0][0],
+        '2位': conseq[1][0],
+        '3位': conseq[2][0],
+        '4位': conseq[3][0],
+        '5位': conseq[4][0],
+        '6位': conseq[5][0],
+        '7位': conseq[6][0],
+        '8位': conseq[7][0],
+        '9位': conseq[8][0],
+        '10位': conseq[9][0]
+    }
+
+    json_data = json.dumps(dict_data, ensure_ascii=False, indent=2)
+    print(json_data)
+    return json_data
 
 
 if __name__ == '__main__':
-    # http://localhost:5000/ でアクセスできるよう起動
     app.run()
