@@ -35,16 +35,16 @@ def post():
     conseq = model.docvecs.most_similar([model.infer_vector(list)])
 
     dict_data = {
-        '1位': conseq[0][0],
-        '2位': conseq[1][0],
-        '3位': conseq[2][0],
-        '4位': conseq[3][0],
-        '5位': conseq[4][0],
-        '6位': conseq[5][0],
-        '7位': conseq[6][0],
-        '8位': conseq[7][0],
-        '9位': conseq[8][0],
-        '10位': conseq[9][0]
+        'first': conseq[0][0],
+        'second': conseq[1][0],
+        'third': conseq[2][0],
+        'fourth': conseq[3][0],
+        'fifth': conseq[4][0],
+        'sixth': conseq[5][0],
+        'seventh': conseq[6][0],
+        'eighth': conseq[7][0],
+        'ninth': conseq[8][0],
+        'tenth': conseq[9][0]
     }
 
     json_data = json.dumps(dict_data, ensure_ascii=False, indent=2)
