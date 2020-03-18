@@ -4,8 +4,10 @@ import requests
 import xml.etree.ElementTree as ET
 import json
 import settings
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 model = Doc2Vec.load('models/doc2_1.model')
 yahoo_url = 'https://jlp.yahooapis.jp/MAService/V1/parse'

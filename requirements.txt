@@ -2,3 +2,4 @@ Flask
 gensim
 gunicorn
 python-dotenv
+flask_cors
