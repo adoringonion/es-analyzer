@@ -1,13 +1,14 @@
 from gensim.models.doc2vec import Doc2Vec
 from flask import Flask, request
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 import requests
 import xml.etree.ElementTree as ET
 import json
 import settings
 
 app = Flask(__name__)
-CORS(app)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-TYpe'
 
 model = Doc2Vec.load('models/doc2_1.model')
 yahoo_url = 'https://jlp.yahooapis.jp/MAService/V1/parse'
@@ -15,6 +16,7 @@ client_id = settings.ID
 
 
 @app.route("/", methods=['POST'])
+@cross_origin()
 def post():
     sentence = request.form['sentence']
     list = []
